@@ -106,6 +106,84 @@ SELECT
   FROM
        EMPLOYEE;
 
+SELECT
+	   EMP_NAME
+	 , SUBSTR(EMP_NO, 8, 1) 
+  FROM
+  	   EMPLOYEE;
+
+-- 남성 사원들만 이름을 조회
+SELECT
+	   EMP_NAME
+  FROM
+  	   EMPLOYEE
+ WHERE
+ 	   SUBSTR(EMP_NO, 8, 1) = 1;
+------------------------------------------------------------------------------------------
+/*
+ * LPAD / RPAD
+ * 
+ * -LPAD / RPAD(STR, 최종적으로 반환할 문자의 길이(바이트), 패딩할문자)
+ * : 인자로 전달한 문자열에 임의의 문자를 왼쪽 또는 오른쪽에 덧붙여서 N길이만큼의 문자열 반환
+ * 
+ * 결과값은 CHARACTER타입으로 반환
+ * 덧붙이고자 하는 문자는 생략 가능
+ * 
+ */
+
+SELECT
+	   EMAIL
+  FROM
+       EMPLOYEE;
+
+SELECT
+	   LPAD(EMAIL, 25)
+  FROM
+   	   EMPLOYEE;
+
+SELECT
+	   LPAD(EMAIL, 25, '!')
+  FROM
+  	   EMPLOYEE;
+
+SELECT
+	   EMP_NAME
+	 , EMP_NO
+  FROM
+  	   EMPLOYEE;
+
+-- EMPLOYEE 테이블에서 모든 직원의 사원명과 주민등록번호 뒤 6자리를 마스킹 처리해서 조회
+-- 예시 => 이** 621345 - 1******
+
+SELECT
+	   SUBSTR(EMP_NAME, 1, 1)
+	 , SUBSTR(EMP_NO, 1, 8)
+  FROM
+       EMPLOYEE;
+
+SELECT
+	   RPAD(SUBSTR(EMP_NAME, 1, 1), 4, '*')
+	 , RPAD(SUBSTR(EMP_NO, 1, 8), 14, '*')
+  FROM
+  	   EMPLOYEE;
+
+	 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
