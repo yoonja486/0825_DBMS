@@ -146,10 +146,125 @@ SELECT * FROM JOB;			-- JOB_CODE, JOB_NAME
 SELECT * FROM EMPLOYEE;		-- EMP_NAME, JOB_CODE
 
 -- CASE 2. 연결할 두 컬럼의 이름이 같은 경우(JOB_CODE)
+SELECT 
+       JOB_CODE
+     , JOB_NAME
+     , EMP_NAME
+     , JOB_CODE
+  FROM 
+       EMPLOYEE, JOB
+ WHERE
+       JOB_CODE = JOB_CODE;
 
-
-
+-- 방법 1. 테이블명을 사용하는 방법
+SELECT
+       EMP_NAME
+     , EMPLOYEE.JOB_CODE
+     , JOB.JOB_CODE
+     , JOB_NAME
+  FROM
+       EMPLOYEE, JOB
+ WHERE
+       EMPLOYEE.JOB_CODE = JOB.JOB_CODE;
   
+-- 방법 2. 별칭 사용(각 테이블마다 별칭 부여 가능)
+-- 실수를 줄일 수 있지만 같은 앞글자가 많을 경우 헷갈릴 수가 있음(잘 사용해야함)
+SELECT
+       EMP_NAME
+     , E.JOB_CODE
+     , J.JOB_CODE
+     , JOB_NAME
+  FROM
+       EMPLOYEE E
+     , JOB J
+ WHERE 
+       E.JOB_CODE = J.JOB_CODE;
+
+--> ANSI구문
+-- FROM절에 기준 테이블을 하나 기술한 뒤 
+-- 그 뒤에 JOIN절에 같이 조회하고자 하는 테이블을 기술(매칭시킬 컬럼에 대한 조건도 기술)
+-- USING / ON 구문
+
+-- EMP_NAME, DEPT_CODE, DEPT_TITLE
+-- 사원명, 부서코드, 부서명
+-- 연결컬럼이 컬럼명이 다름(EMPLOYEE - DEPT_CODE / DEPARTMENT - DEPT_CODE)
+-- 무조건 ON구문만 사용가능!!(USING은 못씀 안됨 불가능함!!!!!!!)
+SELECT 
+       EMP_NAME
+     , DEPT_CODE
+     , DEPT_TITLE
+  FROM 
+       EMPLOYEE
+-- INNER
+  JOIN
+	   DEPARTMENT ON (DEPT_CODE = DEPT_ID);
+
+-- EMP_NAME, JOB_CODE, JOB_NAME
+-- 사원명, 	  직급코드, 	직급명
+-- 연결할 두 컬럼명이 같을 경우(JOB_CODE)
+-- ON 구문이용 ) 애매하다(AMBIGUOUSLY)발생할 수 있음 어떤 테이블의 컬럼인지 명시
+SELECT
+       EMP_NAME
+     , E.JOB_CODE
+     , JOB_NAME
+  FROM
+       EMPLOYEE E
+  JOIN
+       JOB J ON (E.JOB_CODE = J.JOB_CODE);
+
+-- USING 구문이용 ) 컬럼명이 동일할 경우 사용이 가능하며 동등비교 연산자를 기술하지 않음
+SELECT
+       EMP_NAME
+     , JOB_CODE
+     , JOB_NAME
+  FROM
+       EMPLOYEE
+  JOIN
+       JOB USING (JOB_CODE);
+
+-- [ 참고사항 ] NATURAL JOIN(자연조인)
+SELECT
+       EMP_NAME
+     , JOB_CODE
+     , JOB_NAME
+  FROM
+       EMPLOYEE
+NATURAL
+  JOIN
+       JOB;
+-- 두 개의 테이블을 조인하는데 운 좋게도 두 개의 테이블에 일치하는 컬럼이 딱 하나 있었다.      
+     
+-- < Quiz >
+-- 사원명과 직급명을 같이 조회해주세요. 단 직급명이 대리인 사원들만 조회하세요.
+-- EMP_NAME, JOB_NAME
+--> ORACLE문법
+SELECT
+       EMP_NAME
+     , JOB_NAME
+  FROM 
+       EMPLOYEE E
+     , JOB J
+ WHERE
+       E.JOB_CODE = J.JOB_CODE
+   AND
+       JOB_NAME = '대리';
+
+--> ANSI문법
+SELECT
+       EMP_NAME
+     , JOB_NAME
+  FROM
+       EMPLOYEE E
+  JOIN
+       JOB J ON(E.JOB_CODE = J.JOB_CODE)
+ WHERE
+       JOB_NAME = '대리';
+
+-- EQUAL JOIN / INNER JOIN : 일치하지 않는 행은 애초에 ResultSet에 포함시키지 않음
+-----------------------------------------------------------------------------------------------------
+
+
+
 
        
 
