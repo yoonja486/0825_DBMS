@@ -1,0 +1,76 @@
+CREATE TABLE TB_MUSIC(
+	MUSIC_ID NUMBER PRIMARY KEY,
+	TITLE VARCHAR2(200) NOT NULL,
+    ARTISTS VARCHAR2(100) NOT NULL,
+    GENRE VARCHAR2(100),
+    RELEASE_DATE DATE,
+    SONGWRITER VARCHAR2(50),
+    LYRICIST VARCHAR2(50),
+    ENTERTAINMENT VARCHAR2(100)
+);
+
+SELECT 
+	   MUSIC_ID
+     , TITLE 
+     , ARTISTS 
+     , GENRE 
+     , TO_CHAR(RELEASE_DATE, 'YYYY/MM/DD') AS RELEASE_DATE 
+     , SONGWRITER
+     , LYRICIST
+     , ENTERTAINMENT
+  FROM 
+       TB_MUSIC;
+
+-- 순번, 타이틀명, 아티스트, 장르, 발매일자, 작곡가, 작사가, 소속사
+INSERT 
+  INTO 
+       TB_MUSIC 
+       (MUSIC_ID, TITLE ,ARTISTS ,GENRE , RELEASE_DATE, SONGWRITER, LYRICIST, ENTERTAINMENT)        
+VALUES
+       (
+       (SELECT count(*) + 1 FROM TB_MUSIC)
+     , 'Endless Rain'
+     , 'X-Japan'
+     , 'J-Rock'
+     , TO_DATE('19890421','YYYY-MM-DD')
+     , 'Yoshiki'
+     , 'Yoshiki'
+     , ''
+       );
+ 
+COMMIT;
+
+SELECT * FROM TB_MUSIC;
+
+SELECT
+	   MUSIC_ID
+	 , TITLE
+	 , ARTISTS
+	 , GENRE
+	 , RELEASE_DATE
+	 , SONGWRITER
+	 , LYRICIST
+	 , ENTERTAINMENT
+  FROM 
+       TB_MUSIC
+ ORDER
+    BY
+       MUSIC_ID DESC;
+
+
+
+
+
+-- SELECT * FROM EMPLOYEE;
+
+-- SELECT  TO_char( (SELECT COUNT(*) + 1 FROM EMPLOYEE) ) 
+-- FROM dual ;
+
+
+
+
+-- SELECT * FROM ALL_TAB_COLUMNS
+-- WHERE TABLE_NAME = 'EMPLOYEE'; -- 테이블 NOT NULL값 조회하는 문장
+
+
+
