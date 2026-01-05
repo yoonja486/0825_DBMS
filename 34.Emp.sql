@@ -1,6 +1,26 @@
 SELECT * FROM EMPLOYEE; -- EMP_ID , EMP_NAME, SALARY, DEPT_CODE, JOB_CODE			
 SELECT * FROM JOB;                                            -- JOB_CODE, JOB_NAME
-SELECT * FROM DEPARTMENT;                          -- DEPT_ID,                       DEPT_TITLE
+SELECT * FROM DEPARTMENT; -- DEPT_ID,                                               DEPT_TITLE
+
+SELECT
+	   EMP_ID
+	 , EMP_NAME
+	 , SALARY
+	 , DEPT_TITLE
+	 , JOB_NAME
+  FROM
+       EMPLOYEE e
+  JOIN
+       DEPARTMENT d ON(e.JOB_CODE)
+  JOIN
+       JOB j;
+       
+
+
+
+
+
+
 
 SELECT	-- 2번 부서가 동일한 사원조회
        EMP_NAME
